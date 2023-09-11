@@ -4,4 +4,6 @@ roadmap:
 
 - [ ] multiples dest langs
 - [ ] url and upload options
-- [ ] copy to clipboard
+- [x] copy to clipboard
+- [ ] style
+- [ ] specs

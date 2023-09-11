@@ -28,6 +28,11 @@ metadata = (('authorization', 'Key ' + PAT),)
 
 userDataObject = resources_pb2.UserAppIDSet(user_id=USER_ID, app_id=APP_ID)
 
+def translate(text):
+        translator = Translator()
+        translate = translator.translate((text), src='en', dest=code)
+        return translate.text
+
 st.title('too lazy to write alt', anchor=False)
 st.write('[![general-english-image-caption-blip-2](https://clarifai.com/api/salesforce/blip/models/general-english-image-caption-blip-2/badge)](https://clarifai.com/salesforce/blip/models/general-english-image-caption-blip-2)')
 
@@ -54,11 +59,6 @@ with col2:
 st.divider()
 
 if images and button:
-    def translate(text):
-        translator = Translator()
-        translate = translator.translate((text), src='en', dest=code)
-        return translate.text
-
     temp_dir = tempfile.TemporaryDirectory()
 
     for i, image in enumerate(images):
@@ -71,8 +71,6 @@ if images and button:
 
         IMAGE_URL = 'https://www.w3schools.com/html/pic_trulli.jpg'
         # IMAGE_URL = temp_image_path
-
-        st.image(image, caption=f'{i+1}')
 
         response = stub.PostModelOutputs(
             service_pb2.PostModelOutputsRequest(
@@ -98,15 +96,15 @@ if images and button:
 
         alt = response.outputs[0].data.text.raw
 
-        st.caption('english alt')
-        st.write(alt.capitalize())
+        col1, col2 = st.columns(2)
 
-        if not code =='en':
-            st.caption(f'{alt_lang.lower()} alt')
-            st.write(translate(alt))
+        with col1:
+            st.image(image)
 
+        with col2:
+            st.caption('english alt')
+            st.code(alt.capitalize(), language='text')
 
-
-
-
-
+            if not code =='en':
+                st.caption(f'{alt_lang.lower()} alt')
+                st.code(translate(alt), language='text')
