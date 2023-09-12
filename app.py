@@ -95,8 +95,8 @@ if images and button:
         temp_image_path = os.path.join(temp_dir.name, image.name)
         image_io.save(temp_image_path)
 
-        IMAGE_URL = 'https://www.w3schools.com/html/pic_trulli.jpg'
-        # IMAGE_URL = temp_image_path
+        # IMAGE_URL = 'https://www.w3schools.com/html/pic_trulli.jpg'
+        IMAGE_URL = temp_image_path
 
         response = stub.PostModelOutputs(
             service_pb2.PostModelOutputsRequest(
