@@ -5,5 +5,5 @@ roadmap:
 - [ ] multiples dest langs
 - [ ] url and upload options
 - [x] copy to clipboard
-- [ ] style
+- [x] style
 - [ ] specs

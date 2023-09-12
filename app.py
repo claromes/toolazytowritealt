@@ -13,6 +13,31 @@ from clarifai_grpc.grpc.api.status import status_code_pb2
 
 from langs import langs
 
+st.set_page_config(
+    page_title='too lazy to write alt',
+    page_icon='🦥',
+    layout='centered',
+    menu_items={
+        'About': '''
+         [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/claromes/toolazytowritealt?include_prereleases)](https://github.com/claromes/toolazytowritealt/releases) [![License](https://img.shields.io/github/license/claromes/toolazytowritealt)](https://github.com/claromes/toolazytowritealt/blob/main/LICENSE)
+
+        *alt text for lazy people.*
+
+        generate and translate alt text
+
+        features:
+
+        - mobile friendly
+        - multiple images
+        - translation for multiple languages
+        - copy to clipboard
+
+        -------
+        ''',
+        'Report a bug': 'https://github.com/claromes/toolazytowritealt/issues'
+    }
+)
+
 load_dotenv()
 PAT = os.getenv('PAT')
 
@@ -37,7 +62,8 @@ st.title('too lazy to write alt', anchor=False)
 st.write('[![general-english-image-caption-blip-2](https://clarifai.com/api/salesforce/blip/models/general-english-image-caption-blip-2/badge)](https://clarifai.com/salesforce/blip/models/general-english-image-caption-blip-2)')
 
 st.write('upload images')
-images = st.file_uploader('upload images', help='we do not store your files', accept_multiple_files=True, label_visibility='collapsed')
+images = st.file_uploader('upload images', accept_multiple_files=True, label_visibility='collapsed')
+st.caption('*we do not store your images')
 
 st.write('alt language other than english')
 col1, col2 = st.columns(2)
