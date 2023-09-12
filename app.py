@@ -97,7 +97,6 @@ if images and button:
 
         # IMAGE_URL = 'https://www.w3schools.com/html/pic_trulli.jpg'
         IMAGE_URL = temp_image_path
-        print(temp_image_path)
 
         response = stub.PostModelOutputs(
             service_pb2.PostModelOutputsRequest(
@@ -118,7 +117,6 @@ if images and button:
         )
 
         if response.status.code != status_code_pb2.SUCCESS:
-            print(post_model_outputs_response.status)
             st.error(f'Post model outputs failed, status: ' + response.status.description)
 
         alt = response.outputs[0].data.text.raw
