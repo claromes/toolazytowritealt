@@ -97,6 +97,7 @@ if images and button:
 
         # IMAGE_URL = 'https://www.w3schools.com/html/pic_trulli.jpg'
         IMAGE_URL = temp_image_path
+        print(temp_image_path)
 
         response = stub.PostModelOutputs(
             service_pb2.PostModelOutputsRequest(
