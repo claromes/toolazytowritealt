@@ -43,8 +43,8 @@ PAT = os.getenv('PAT')
 
 USER_ID='salesforce'
 APP_ID='blip'
-MODEL_ID = 'general-english-image-caption-blip-2'
-MODEL_VERSION_ID = '71cb98f572694e28a99fa8fa86aaa825'
+MODEL_ID = 'general-english-image-caption-blip-2-6_7B'
+MODEL_VERSION_ID = 'd5ce30a4f98646deb899a19ff4becaad'
 
 channel = ClarifaiChannel.get_grpc_channel()
 stub = service_pb2_grpc.V2Stub(channel)
@@ -59,7 +59,7 @@ def translate(text):
         return translate.text
 
 st.title('too lazy to write alt', anchor=False)
-st.write('[![general-english-image-caption-blip-2](https://clarifai.com/api/salesforce/blip/models/general-english-image-caption-blip-2/badge)](https://clarifai.com/salesforce/blip/models/general-english-image-caption-blip-2)')
+st.write('[![general-english-image-caption-blip-2-6_7B](https://clarifai.com/api/salesforce/blip/models/general-english-image-caption-blip-2-6_7B/badge)](https://clarifai.com/salesforce/blip/models/general-english-image-caption-blip-2-6_7B)')
 
 st.write('upload images')
 images = st.file_uploader('upload images', accept_multiple_files=True, label_visibility='collapsed')
@@ -97,7 +97,6 @@ if images and button:
 
         # IMAGE_URL = 'https://www.w3schools.com/html/pic_trulli.jpg'
         IMAGE_URL = temp_image_path
-        print(temp_image_path)
 
         response = stub.PostModelOutputs(
             service_pb2.PostModelOutputsRequest(
