@@ -19,18 +19,19 @@ st.set_page_config(
     layout='centered',
     menu_items={
         'About': '''
-         [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/claromes/toolazytowritealt?include_prereleases)](https://github.com/claromes/toolazytowritealt/releases) [![License](https://img.shields.io/github/license/claromes/toolazytowritealt)](https://github.com/claromes/toolazytowritealt/blob/main/LICENSE)
+         [![general-english-image-caption-blip-2-6_7B](https://clarifai.com/api/salesforce/blip/models/general-english-image-caption-blip-2-6_7B/badge)](https://clarifai.com/salesforce/blip/models/general-english-image-caption-blip-2-6_7B) [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/claromes/toolazytowritealt?include_prereleases)](https://github.com/claromes/toolazytowritealt/releases) [![License](https://img.shields.io/github/license/claromes/toolazytowritealt)](https://github.com/claromes/toolazytowritealt/blob/main/LICENSE)
 
-        *alt text for lazy people.*
+        # 🦥
 
-        generate and translate alt text
+        *alt text for lazy people*
+
+        generate and translate alt text using vision-language pre-trained and large language model
 
         features:
 
-        - mobile friendly
-        - multiple images
-        - image via upload or URL
-        - translation for multiple languages
+        - mobile-friendly
+        - multiple images via upload or URL
+        - translation into multiple languages
         - copy to clipboard
 
         -------
@@ -69,20 +70,31 @@ def show_result(image, alt):
         st.caption('english alt')
         st.code(alt.capitalize(), language='text')
 
-        if not code =='en':
+        if not code =='nothanks':
             st.caption(f'{alt_lang.lower()} alt')
             st.code(translate(alt), language='text')
 
+file_uploader_font_size = '''
+<style>
+    .css-13f0ups  {
+        font-size: 12px;
+    }
+</style>
+'''
+
+st.markdown(file_uploader_font_size, unsafe_allow_html=True)
+
 st.title('too lazy to write alt', anchor=False)
-st.write('[![general-english-image-caption-blip-2-6_7B](https://clarifai.com/api/salesforce/blip/models/general-english-image-caption-blip-2-6_7B/badge)](https://clarifai.com/salesforce/blip/models/general-english-image-caption-blip-2-6_7B)')
+st.caption('generate and translate alt text using VLP and LLM. [readme!](https://github.com/claromes/toolazytowritealt#too-lazy-to-write-alt)')
+
 st.columns(1)
 
-uploaded_files = st.file_uploader('upload images', accept_multiple_files=True, help='we do not store your images')
+uploaded_files = st.file_uploader('upload images', type=['PNG', 'JPG', 'JFIF', 'TIFF', 'BMP', 'WEBP'], accept_multiple_files=True, help='we do not store your images')
 
 url = st.text_input('paste an image URL')
 
 alt_lang = st.selectbox(
-    'alt language',
+    'alt text language other than english',
     (lang[0] for lang in langs)
 )
 
@@ -98,6 +110,7 @@ with col2:
 
 st.divider()
 
+# docs: https://docs.clarifai.com/api-guide/predict/images#predict-via-bytes
 if button:
     try:
         with st.spinner('generating...'):
@@ -114,7 +127,7 @@ if button:
 
                     IMAGE_FILE_LOCATION = temp_image_path
 
-                    with open(IMAGE_FILE_LOCATION, "rb") as f:
+                    with open(IMAGE_FILE_LOCATION, 'rb') as f:
                         file_bytes = f.read()
 
                     response = stub.PostModelOutputs(
