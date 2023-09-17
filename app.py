@@ -13,6 +13,7 @@ from clarifai_grpc.grpc.api.status import status_code_pb2
 
 from langs import langs
 
+##### Streamlit Configurations #####
 st.set_page_config(
     page_title='too lazy to write alt',
     page_icon='🦥',
@@ -40,6 +41,7 @@ st.set_page_config(
     }
 )
 
+##### Clarifai Variables #####
 load_dotenv()
 PAT = os.getenv('PAT')
 
@@ -55,11 +57,14 @@ metadata = (('authorization', 'Key ' + PAT),)
 
 userDataObject = resources_pb2.UserAppIDSet(user_id=USER_ID, app_id=APP_ID)
 
+##### Functions #####
+##### ##### Translation ##### #####
 def translate(text):
     translator = Translator()
     translate = translator.translate((text), src='en', dest=code)
     return translate.text
 
+##### ##### Alt Text Interface ##### #####
 def show_result(image, alt):
     col1, col2 = st.columns(2)
 
@@ -74,6 +79,7 @@ def show_result(image, alt):
             st.caption(f'{alt_lang.lower()} alt')
             st.code(translate(alt).capitalize(), language='text')
 
+##### Streamlit Sytle Variables #####
 file_uploader_font_size = '''
 <style>
     .css-13f0ups  {
@@ -84,6 +90,7 @@ file_uploader_font_size = '''
 
 st.markdown(file_uploader_font_size, unsafe_allow_html=True)
 
+##### Options Interface #####
 st.title('too lazy to write alt', anchor=False)
 st.caption('generate and translate alt text using VLP and LLM. [readme!](https://github.com/claromes/toolazytowritealt#-too-lazy-to-write-alt)')
 
@@ -110,10 +117,12 @@ with col2:
 
 st.divider()
 
-# docs: https://docs.clarifai.com/api-guide/predict/images#predict-via-bytes
+##### Predictions #####
+##### Docs: https://docs.clarifai.com/api-guide/predict/images
 if button:
     try:
         with st.spinner('generating...'):
+            ##### ##### Predict via Bytes ##### #####
             if uploaded_files:
                 temp_dir = tempfile.TemporaryDirectory()
 
@@ -155,6 +164,7 @@ if button:
 
                     show_result(temp_image_path, alt)
 
+            ##### ##### Predict via URL ##### #####
             if url:
                 response = stub.PostModelOutputs(
                     service_pb2.PostModelOutputsRequest(
