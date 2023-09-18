@@ -92,7 +92,7 @@ st.markdown(file_uploader_font_size, unsafe_allow_html=True)
 
 ##### Options Interface #####
 st.title('too lazy to write alt', anchor=False)
-st.caption('generate and translate alt text using VLP and LLM. [readme!](https://github.com/claromes/toolazytowritealt#-too-lazy-to-write-alt)')
+st.caption('generate and translate alt text using VLP and LLM')
 
 st.columns(1)
 
@@ -187,5 +187,8 @@ if button:
                 alt = response.outputs[0].data.text.raw
 
                 show_result(url, alt)
+
+            st.columns(1)
+            st.caption('**Limitations**: The BLIP-2 image captioning model inherits language model limitations like offensive language and bias. Performance issues can arise from inaccurate knowledge, outdated information, and data quality. [Read more](https://github.com/claromes/toolazytowritealt#language-model).')
     except Exception as e:
         st.error(f'An error has occurred: {e}')
