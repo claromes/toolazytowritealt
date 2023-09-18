@@ -1,5 +1,5 @@
 langs = [
-    ['no, thanks', 'nothanks'],
+    ['', 'empty'],
     ['Afrikaans', 'af'],
     ['Arabic', 'ar'],
     ['Belarusian', 'be'],

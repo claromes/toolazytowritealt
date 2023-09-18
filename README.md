@@ -6,8 +6,6 @@ Generate and translate alt text using VLP and LLM.
 
 *too lazy...* is mobile-friendly, allows multiple images to be uploaded via URL or directly, offers translation into multiple languages, and includes a "copy to clipboard" button for each generated alt text.
 
-![too lazy to write alt](docs/alt-text.png)
-
 ## Language Model
 
 BLIP-2* OPT 6.7B model is fine-tuned for the image captioning task using the ViT-g image encoder and the [OPT language model](https://arxiv.org/pdf/2205.01068.pdf) with 6.7 billion parameters. The model uses the prompt "a photo of" as an initial input to the language model and is trained to generate the caption with the language modeling loss.
@@ -33,6 +31,12 @@ PNG, JPG, JFIF, TIFF, BMP, WEBP, JPEG, TIF
 
 - Up to 128 images
 - Up to 20MB per file
+
+## Screenshots
+
+![too lazy to write alt](docs/toolazy1.jpg)
+![too lazy to write alt](docs/toolazy2.jpg)
+![too lazy to write alt](docs/toolazy3.jpg)
 
 ## Docs
 

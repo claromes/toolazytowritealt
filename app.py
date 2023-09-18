@@ -73,7 +73,7 @@ def show_result(image, alt):
         st.caption('english alt')
         st.code(alt.capitalize(), language='text')
 
-        if not code =='nothanks':
+        if not code == 'empty':
             st.caption(f'{alt_lang.lower()} alt')
             st.code(translate(alt).capitalize(), language='text')
 
@@ -116,12 +116,12 @@ with col2:
     st.columns(1)
     button = st.button("generate alt because I'm too lazy", type='primary', use_container_width=True)
 
-st.divider()
-
 ##### Predictions #####
 ##### Docs: https://docs.clarifai.com/api-guide/predict/images
 if button:
     try:
+        st.divider()
+
         with st.spinner('generating...'):
             ##### ##### Predict via Bytes ##### #####
             if uploaded_files:
