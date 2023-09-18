@@ -96,7 +96,10 @@ st.caption('generate and translate alt text using VLP and LLM')
 
 st.columns(1)
 
-uploaded_files = st.file_uploader('upload images', type=['PNG', 'JPG', 'JFIF', 'TIFF', 'BMP', 'WEBP'], accept_multiple_files=True, help='we do not store your images')
+uploaded_files = st.file_uploader('upload images', type=['PNG', 'JPG', 'JFIF', 'TIFF', 'BMP', 'WEBP'], accept_multiple_files=True, help='''
+                                                                                                                                        - up to 128 images
+                                                                                                                                        - we do not store your images
+                                                                                                                                        ''')
 
 url = st.text_input('paste an image URL')
 

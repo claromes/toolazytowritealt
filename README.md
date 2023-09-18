@@ -27,9 +27,10 @@ The model is fine-tuned for the image captioning task using the prompt "a photo 
 
 PNG, JPG, JFIF, TIFF, BMP, WEBP, JPEG, TIF
 
-### Limit per File
+### Upload limits
 
-Up to 20MB
+- Up to 128 images
+- Up to 20MB per file
 
 ## Docs
 
