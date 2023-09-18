@@ -3,7 +3,6 @@ import os
 import io
 import tempfile
 
-from dotenv import load_dotenv
 from PIL import Image
 from googletrans import Translator
 
@@ -42,8 +41,7 @@ st.set_page_config(
 )
 
 ##### Clarifai Variables #####
-load_dotenv()
-PAT = os.getenv('PAT')
+PAT = st.secrets.PAT
 
 USER_ID='salesforce'
 APP_ID='blip'
