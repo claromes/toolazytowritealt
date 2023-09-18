@@ -1,8 +1,8 @@
 # Roadmap
 
+- [ ] download all generated alt texts in `txt` format
 - [ ] multiple dest langs (multiselect)
 - [ ] multiple urls (comma-separated)
-- [ ] download all generated alt texts in `txt` format
 - [ ] add model cache
 - [x] add alert about results
 - [x] url and upload options
