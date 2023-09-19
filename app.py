@@ -124,10 +124,11 @@ def predict_via_url(IMAGE_URL):
 
 ##### ##### Status Check ##### #####
 def status():
-    if response.status.code != status_code_pb2.SUCCESS:
-        if response.status.code == status_code_pb2.MODEL_DEPLOYING:
-            st.info('Model loaded. Please, generate alt text again')
+    if response.status.code == status_code_pb2.MODEL_DEPLOYING:
+        st.experimental_rerun()
+        st.info('Model loaded. Please, generate alt text again')
 
+    if response.status.code != status_code_pb2.SUCCESS and response.status.code != status_code_pb2.MODEL_DEPLOYING:
         st.error(f'Post model outputs failed, status: ' + response.status.description)
 
 ##### Streamlit Sytle Variables #####
@@ -219,4 +220,5 @@ if button and (uploaded_files or url):
                 st.columns(1)
             st.caption('**Limitations**: The BLIP-2 image captioning model inherits language model limitations like offensive language and bias. Performance issues can arise from inaccurate knowledge, outdated information, and data quality. [Read more](https://github.com/claromes/toolazytowritealt#language-model).')
     except Exception as e:
-        st.error(f'An error has occurred: {e}')
+        if response.status.code != status_code_pb2.MODEL_DEPLOYING:
+            st.error(f'An error has occurred: {e}')

@@ -53,6 +53,8 @@ $ `cd toolazytowritealt`
 
 $ `pip install -r requirements.txt`
 
+Create `.streamlit/secrets.toml` file and add `PAT='YOUR_PAT_GOES_HERE'`
+
 $ `streamlit run app.py`
 
 Streamlit will be served at http://localhost:8501
