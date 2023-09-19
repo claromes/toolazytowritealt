@@ -125,7 +125,6 @@ def predict_via_url(IMAGE_URL):
 ##### ##### Status Check ##### #####
 def status():
     if response.status.code == status_code_pb2.MODEL_DEPLOYING:
-        st.experimental_rerun()
         st.info('Model loaded. Please, generate alt text again')
 
     if response.status.code != status_code_pb2.SUCCESS and response.status.code != status_code_pb2.MODEL_DEPLOYING:

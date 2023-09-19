@@ -57,7 +57,7 @@ Create `.streamlit/secrets.toml` file and add `PAT='YOUR_PAT_GOES_HERE'`
 
 $ `streamlit run app.py`
 
-Streamlit will be served at http://localhost:8501
+Streamlit will be served at http://localhost:8502
 
 ## Docs
 
