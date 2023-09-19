@@ -124,10 +124,8 @@ def predict_via_url(IMAGE_URL):
 
 ##### ##### Status Check ##### #####
 def status():
-    print(response.status)
     if response.status.code == status_code_pb2.MODEL_DEPLOYING:
-        print(response.status.code)
-        button = True
+        st.info('Model loaded. Please, generate alt text again')
 
     if response.status.code != status_code_pb2.SUCCESS:
         st.error(f'Post model outputs failed, status: ' + response.status.description)
@@ -202,8 +200,6 @@ if button and (uploaded_files or url):
                         IMAGE_URL = f.read()
 
                     response, alt = predict_via_bytes(IMAGE_URL)
-
-                    print(response.status)
 
                     status()
                     show_result(IMAGE_FILE_LOCATION, alt)
