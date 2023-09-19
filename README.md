@@ -38,6 +38,25 @@ PNG, JPG, JFIF, TIFF, BMP, WEBP, JPEG, TIF
 ![too lazy to write alt](docs/toolazy2.jpg)
 ![too lazy to write alt](docs/toolazy3.jpg)
 
+## Development
+
+### Requirements
+
+- Python 3.8+
+- Clarifai PAT
+
+### Installation
+
+$ `git clone git@github.com:claromes/toolazytowritealt.git`
+
+$ `cd toolazytowritealt`
+
+$ `pip install -r requirements.txt`
+
+$ `streamlit run app.py`
+
+Streamlit will be served at http://localhost:8501
+
 ## Docs
 
 - [Roadmap](docs/ROADMAP.md)
