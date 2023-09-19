@@ -3,7 +3,7 @@ import os
 import io
 import tempfile
 
-from PIL import Image, ImageOps
+from PIL import Image
 from googletrans import Translator
 
 from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
@@ -66,10 +66,6 @@ def show_result(image, alt):
     col1, col2 = st.columns(2)
 
     with col1:
-        if uploaded_files:
-            image = Image.open(image)
-            image = ImageOps.exif_transpose(image)
-
         st.image(image)
 
     with col2:
