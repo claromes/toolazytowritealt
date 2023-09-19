@@ -203,6 +203,8 @@ if button and (uploaded_files or url):
 
                     response, alt = predict_via_bytes(IMAGE_URL)
 
+                    print(response.status)
+
                     status()
                     show_result(IMAGE_FILE_LOCATION, alt)
 
