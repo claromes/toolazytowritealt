@@ -77,7 +77,7 @@ def show_result(image, alt):
             st.code(translate(alt).capitalize(), language='text')
 
 ##### ##### Predict via Bytes ##### #####
-@st.cache_resource(show_spinner=False)
+@st.cache_resource(ttl=900, show_spinner=False)
 def predict_via_bytes(IMAGE_URL):
     response = stub.PostModelOutputs(
         service_pb2.PostModelOutputsRequest(
@@ -97,10 +97,10 @@ def predict_via_bytes(IMAGE_URL):
         metadata=metadata
     )
 
-    return response, response.outputs[0].data.text.raw
+    return response
 
 ##### ##### Predict via URL ##### #####
-@st.cache_resource(show_spinner=False)
+@st.cache_resource(ttl=900, show_spinner=False)
 def predict_via_url(IMAGE_URL):
     response = stub.PostModelOutputs(
         service_pb2.PostModelOutputsRequest(
@@ -120,14 +120,14 @@ def predict_via_url(IMAGE_URL):
         metadata=metadata
     )
 
-    return response, response.outputs[0].data.text.raw
+    return response
 
 ##### ##### Status Check ##### #####
 def status():
-    if response.status.code == status_code_pb2.MODEL_DEPLOYING:
-        st.info('Model loaded. Please, generate alt text again')
-
     if response.status.code != status_code_pb2.SUCCESS:
+        if response.status.code == status_code_pb2.MODEL_DEPLOYING:
+            st.info('Model loaded. Please, generate alt text again')
+
         st.error(f'Post model outputs failed, status: ' + response.status.description)
 
 ##### Streamlit Sytle Variables #####
@@ -199,20 +199,23 @@ if button and (uploaded_files or url):
                     with open(IMAGE_FILE_LOCATION, 'rb') as f:
                         IMAGE_URL = f.read()
 
-                    response, alt = predict_via_bytes(IMAGE_URL)
-
+                    response = predict_via_bytes(IMAGE_URL)
                     status()
+                    alt = response.outputs[0].data.text.raw
                     show_result(IMAGE_FILE_LOCATION, alt)
+
+                    st.columns(1)
 
             ##### ##### URL ##### #####
             if url:
                 IMAGE_URL = url
 
-                response, alt = predict_via_url(IMAGE_URL)
+                response = predict_via_url(IMAGE_URL)
                 status()
+                alt = response.outputs[0].data.text.raw
                 show_result(url, alt)
 
-            st.columns(1)
+                st.columns(1)
             st.caption('**Limitations**: The BLIP-2 image captioning model inherits language model limitations like offensive language and bias. Performance issues can arise from inaccurate knowledge, outdated information, and data quality. [Read more](https://github.com/claromes/toolazytowritealt#language-model).')
     except Exception as e:
         st.error(f'An error has occurred: {e}')
