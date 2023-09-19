@@ -124,7 +124,7 @@ def predict_via_url(IMAGE_URL):
 
 ##### ##### Status Check ##### #####
 def status():
-    if response.status.code == status_code_pb2.MODEL_DEPLOYING:
+    if response.status.code == 'MODEL_DEPLOYING':
         print(response.status.code)
         button = True
 
