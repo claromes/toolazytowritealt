@@ -77,6 +77,27 @@ def show_result(image, alt):
             st.caption(f'{alt_lang.lower()} alt')
             st.code(translate(alt).capitalize(), language='text')
 
+##### ##### Predict via Bytes ##### #####
+@st.cache_resource(show_spinner=False)
+def predict_via_bytes(file_bytes):
+    return stub.PostModelOutputs(
+        service_pb2.PostModelOutputsRequest(
+            user_app_id=userDataObject,
+            model_id=MODEL_ID,
+            version_id=MODEL_VERSION_ID,
+            inputs=[
+                resources_pb2.Input(
+                    data=resources_pb2.Data(
+                        image=resources_pb2.Image(
+                            base64=file_bytes
+                        )
+                    )
+                )
+            ]
+        ),
+        metadata=metadata
+    )
+
 ##### Streamlit Sytle Variables #####
 file_uploader_font_size = '''
 <style>
@@ -116,14 +137,14 @@ with col2:
     st.columns(1)
     button = st.button("generate alt because I'm too lazy", type='primary', use_container_width=True)
 
-##### Predictions #####
+##### Predictions Interface #####
 ##### Docs: https://docs.clarifai.com/api-guide/predict/images
 if button:
     try:
         st.divider()
 
         with st.spinner('generating...'):
-            ##### ##### Predict via Bytes ##### #####
+            ##### ##### Bytes ##### #####
             if uploaded_files:
                 temp_dir = tempfile.TemporaryDirectory()
 
@@ -140,23 +161,7 @@ if button:
                     with open(IMAGE_FILE_LOCATION, 'rb') as f:
                         file_bytes = f.read()
 
-                    response = stub.PostModelOutputs(
-                        service_pb2.PostModelOutputsRequest(
-                            user_app_id=userDataObject,
-                            model_id=MODEL_ID,
-                            version_id=MODEL_VERSION_ID,
-                            inputs=[
-                                resources_pb2.Input(
-                                    data=resources_pb2.Data(
-                                        image=resources_pb2.Image(
-                                            base64=file_bytes
-                                        )
-                                    )
-                                )
-                            ]
-                        ),
-                        metadata=metadata
-                    )
+                    response = predict_via_bytes(file_bytes)
 
                     if response.status.code != status_code_pb2.SUCCESS:
                         st.error(f'Post model outputs failed, status: ' + response.status.description)
@@ -165,7 +170,7 @@ if button:
 
                     show_result(temp_image_path, alt)
 
-            ##### ##### Predict via URL ##### #####
+            ##### ##### URL ##### #####
             if url:
                 response = stub.PostModelOutputs(
                     service_pb2.PostModelOutputsRequest(
