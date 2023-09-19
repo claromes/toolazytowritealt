@@ -8,9 +8,9 @@ Generate and translate alt text using VLP and LLM.
 
 ## Language Model
 
-BLIP-2* OPT 6.7B model is fine-tuned for the image captioning task using the ViT-g image encoder and the [OPT language model](https://arxiv.org/pdf/2205.01068.pdf) with 6.7 billion parameters. The model uses the prompt "a photo of" as an initial input to the language model and is trained to generate the caption with the language modeling loss.
+BLIP-2 OPT 6.7B model is fine-tuned for the image captioning task using the ViT-g image encoder and the [OPT language model](https://arxiv.org/pdf/2205.01068.pdf) with 6.7 billion parameters. The model uses the prompt "a photo of" as an initial input to the language model and is trained to generate the caption with the language modeling loss.
 
-*[BLIP-2](https://arxiv.org/pdf/2301.12597.pdf) is an innovative and resource-efficient approach to vision-language pre-training (VLP) that utilizes frozen pretrained image encoders and large language models (LLMs) (e.g. OPT, FlanT5).
+[BLIP-2](https://arxiv.org/pdf/2301.12597.pdf) is an innovative and resource-efficient approach to vision-language pre-training (VLP) that utilizes frozen pretrained image encoders and large language models (LLMs) (e.g. OPT, FlanT5).
 
 ### Limitations
 

@@ -42,7 +42,6 @@ st.set_page_config(
 
 ##### Clarifai Variables #####
 PAT = st.secrets.PAT
-
 USER_ID='salesforce'
 APP_ID='blip'
 MODEL_ID = 'general-english-image-caption-blip-2-6_7B'
@@ -79,8 +78,8 @@ def show_result(image, alt):
 
 ##### ##### Predict via Bytes ##### #####
 @st.cache_resource(show_spinner=False)
-def predict_via_bytes(file_bytes):
-    return stub.PostModelOutputs(
+def predict_via_bytes(IMAGE_URL):
+    response = stub.PostModelOutputs(
         service_pb2.PostModelOutputsRequest(
             user_app_id=userDataObject,
             model_id=MODEL_ID,
@@ -89,7 +88,7 @@ def predict_via_bytes(file_bytes):
                 resources_pb2.Input(
                     data=resources_pb2.Data(
                         image=resources_pb2.Image(
-                            base64=file_bytes
+                            base64=IMAGE_URL
                         )
                     )
                 )
@@ -97,6 +96,40 @@ def predict_via_bytes(file_bytes):
         ),
         metadata=metadata
     )
+
+    return response, response.outputs[0].data.text.raw
+
+##### ##### Predict via URL ##### #####
+@st.cache_resource(show_spinner=False)
+def predict_via_url(IMAGE_URL):
+    response = stub.PostModelOutputs(
+        service_pb2.PostModelOutputsRequest(
+            user_app_id=userDataObject,
+            model_id=MODEL_ID,
+            version_id=MODEL_VERSION_ID,
+            inputs=[
+                resources_pb2.Input(
+                    data=resources_pb2.Data(
+                        image=resources_pb2.Image(
+                            url=IMAGE_URL
+                        )
+                    )
+                )
+            ]
+        ),
+        metadata=metadata
+    )
+
+    return response, response.outputs[0].data.text.raw
+
+##### ##### Status Check ##### #####
+def status():
+    if response.status.code == status_code_pb2.MODEL_DEPLOYING:
+        print(response.status.code)
+        button = True
+
+    if response.status.code != status_code_pb2.SUCCESS:
+        st.error(f'Post model outputs failed, status: ' + response.status.description)
 
 ##### Streamlit Sytle Variables #####
 file_uploader_font_size = '''
@@ -115,10 +148,15 @@ st.caption('generate and translate alt text using VLP and LLM')
 
 st.columns(1)
 
-uploaded_files = st.file_uploader('upload images', type=['PNG', 'JPG', 'JFIF', 'TIFF', 'BMP', 'WEBP'], accept_multiple_files=True, help='''
-                                                                                                                                        - up to 128 images
-                                                                                                                                        - we do not store your images
-                                                                                                                                        ''')
+uploaded_files = st.file_uploader(
+    'upload images',
+    type=['PNG', 'JPG', 'JFIF', 'TIFF', 'BMP', 'WEBP'],
+    accept_multiple_files=True,
+    help='''
+        - up to 128 images
+        - we do not store your images
+    '''
+)
 
 url = st.text_input('paste an image URL')
 
@@ -139,11 +177,14 @@ with col2:
 
 ##### Predictions Interface #####
 ##### Docs: https://docs.clarifai.com/api-guide/predict/images
-if button:
+if button and not (uploaded_files or url):
+    st.error('Upload images or enter an image URL')
+
+if button and (uploaded_files or url):
     try:
         st.divider()
 
-        with st.spinner('generating...'):
+        with st.spinner('loading model, generating and translating...'):
             ##### ##### Bytes ##### #####
             if uploaded_files:
                 temp_dir = tempfile.TemporaryDirectory()
@@ -153,45 +194,23 @@ if button:
 
                     image_io = Image.open(io.BytesIO(bytes_data))
 
-                    temp_image_path = os.path.join(temp_dir.name, image.name)
-                    image_io.save(temp_image_path)
-
-                    IMAGE_FILE_LOCATION = temp_image_path
+                    IMAGE_FILE_LOCATION = os.path.join(temp_dir.name, image.name)
+                    image_io.save(IMAGE_FILE_LOCATION)
 
                     with open(IMAGE_FILE_LOCATION, 'rb') as f:
-                        file_bytes = f.read()
+                        IMAGE_URL = f.read()
 
-                    response = predict_via_bytes(file_bytes)
+                    response, alt = predict_via_bytes(IMAGE_URL)
 
-                    if response.status.code != status_code_pb2.SUCCESS:
-                        st.error(f'Post model outputs failed, status: ' + response.status.description)
-
-                    alt = response.outputs[0].data.text.raw
-
-                    show_result(temp_image_path, alt)
+                    status()
+                    show_result(IMAGE_FILE_LOCATION, alt)
 
             ##### ##### URL ##### #####
             if url:
-                response = stub.PostModelOutputs(
-                    service_pb2.PostModelOutputsRequest(
-                        user_app_id=userDataObject,
-                        model_id=MODEL_ID,
-                        version_id=MODEL_VERSION_ID,
-                        inputs=[
-                            resources_pb2.Input(
-                                data=resources_pb2.Data(
-                                    image=resources_pb2.Image(
-                                        url=url
-                                    )
-                                )
-                            )
-                        ]
-                    ),
-                    metadata=metadata
-                )
+                IMAGE_URL = url
 
-                alt = response.outputs[0].data.text.raw
-
+                response, alt = predict_via_url(IMAGE_URL)
+                status()
                 show_result(url, alt)
 
             st.columns(1)
