@@ -154,6 +154,7 @@ uploaded_files = st.file_uploader(
     help='''
         - up to 128 images
         - we do not store your images
+        - we do not strip EXIF data 🙃
     '''
 )
 
