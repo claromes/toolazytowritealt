@@ -2,7 +2,7 @@
 
 - [ ] download all generated alt texts in `txt` format
 - [x] multiple dest langs (multiselect)
-- [ ] multiple urls (comma-separated)
+- [x] multiple urls (comma-separated)
 - [ ] add OCR
 - [ ] load model cache
 - [ ] exif transpose

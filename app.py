@@ -158,7 +158,10 @@ uploaded_files = st.file_uploader(
     '''
 )
 
-url = st.text_input('paste an image URL')
+url = st.text_area('paste image URLs (semicolon separated)')
+
+urls = url.split(';')
+urls = [url.strip() for url in urls]
 
 alt_lang = st.multiselect(
     'alt text language other than english',
@@ -192,7 +195,7 @@ if button and (uploaded_files or url):
             if uploaded_files:
                 temp_dir = tempfile.TemporaryDirectory()
 
-                for i, image in enumerate(uploaded_files):
+                for image in uploaded_files:
                     bytes_data = image.read()
 
                     image_io = Image.open(io.BytesIO(bytes_data))
@@ -212,14 +215,15 @@ if button and (uploaded_files or url):
 
             ##### ##### URL ##### #####
             if url:
-                IMAGE_URL = url
+                for url in urls:
+                    IMAGE_URL = url
 
-                response = predict_via_url(IMAGE_URL)
-                status()
-                alt = response.outputs[0].data.text.raw
-                show_result(url, alt)
+                    response = predict_via_url(IMAGE_URL)
+                    status()
+                    alt = response.outputs[0].data.text.raw
+                    show_result(url, alt)
 
-                st.columns(1)
+                    st.columns(1)
             st.caption('**Limitations**: The BLIP-2 image captioning model inherits language model limitations like offensive language and bias. Performance issues can arise from inaccurate knowledge, outdated information, and data quality. [Read more](https://github.com/claromes/toolazytowritealt#language-model).')
     except Exception as e:
         if response.status.code != status_code_pb2.MODEL_DEPLOYING:
