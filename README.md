@@ -21,6 +21,10 @@ BLIP-2 achieves state-of-the-art performance on various vision-language tasks wh
 
 The model is fine-tuned for the image captioning task using the prompt "a photo of" as an initial input to the language model, and the model is trained to generate the caption with the language modeling loss.
 
+## Known Issue
+
+The model takes some time to load, resulting in a negative user experience. A message has been added to notify users about the model loading and to request a new generation of alt text. This measure aims to temporarily address the issue.
+
 ## Specs
 
 ### Supported Formats
@@ -61,7 +65,7 @@ Create `.streamlit/secrets.toml` file and add `PAT='YOUR_PAT_GOES_HERE'`
 
 $ `streamlit run app.py`
 
-Streamlit will be served at http://localhost:8502
+Streamlit will be served at http://localhost:8501
 
 ## Docs
 
