@@ -38,6 +38,10 @@ PNG, JPG, JFIF, TIFF, BMP, WEBP, JPEG, TIF
 ![too lazy to write alt](docs/toolazy2.jpg)
 ![too lazy to write alt](docs/toolazy3.jpg)
 
+## Recorded Demo
+
+[![recorded demo](docs/toolazy.jpg)](docs/toolazy.mp4)
+
 ## Development
 
 ### Requirements
