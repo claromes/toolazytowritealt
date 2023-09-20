@@ -44,7 +44,7 @@ PNG, JPG, JFIF, TIFF, BMP, WEBP, JPEG, TIF
 
 ## Recorded Demo
 
-[![recorded demo](docs/toolazy.jpg)](https://github-production-user-asset-6210df.s3.amazonaws.com/28742647/269129725-aa51a9f4-ca56-4a31-83aa-992c3de98694.mp4)
+[![recorded demo](docs/toolazy.jpg)](https://github.com/claromes/toolazytowritealt/assets/28742647/fd075a3f-9657-4aab-b674-6704e10791ea)
 
 ## Development
 

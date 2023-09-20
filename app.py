@@ -162,7 +162,7 @@ urls = url.split(';')
 urls = [url.strip() for url in urls]
 
 alt_lang = st.multiselect(
-    'alt text language other than english',
+    'alt text languages other than english',
     (lang[0] for lang in langs),
     placeholder=''
 )
