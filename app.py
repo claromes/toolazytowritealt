@@ -77,7 +77,6 @@ def show_result(image, alt):
             st.code(translate(alt, alt_lang[1]).capitalize(), language='text')
 
 ##### ##### Predict via Bytes ##### #####
-@st.cache_resource(ttl=900, show_spinner=False)
 def predict_via_bytes(IMAGE_URL):
     response = stub.PostModelOutputs(
         service_pb2.PostModelOutputsRequest(
@@ -100,7 +99,6 @@ def predict_via_bytes(IMAGE_URL):
     return response
 
 ##### ##### Predict via URL ##### #####
-@st.cache_resource(ttl=900, show_spinner=False)
 def predict_via_url(IMAGE_URL):
     response = stub.PostModelOutputs(
         service_pb2.PostModelOutputsRequest(

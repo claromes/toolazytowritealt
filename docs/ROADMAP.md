@@ -6,7 +6,6 @@
 - [ ] add OCR
 - [ ] load model cache
 - [ ] exif transpose
-- [x] add model cache
 - [x] add alert about results
 - [x] url and upload options
 - [x] copy to clipboard

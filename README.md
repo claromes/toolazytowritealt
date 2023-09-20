@@ -23,7 +23,7 @@ The model is fine-tuned for the image captioning task using the prompt "a photo 
 
 ## Known Issue
 
-The model takes some time to load, resulting in a negative user experience. A message has been added to notify users about the model loading and to request a new generation of alt text. This measure aims to temporarily address the issue.
+The model takes some time to load, resulting in a negative user experience. A [message](https://github.com/claromes/toolazytowritealt/blob/a8163ce8d0f508a035b55de88a95d94d49b56408/app.py#L128) has been added to notify users about the model loading and to request a new generation of alt text. This measure aims to temporarily address the issue.
 
 ## Specs
 
