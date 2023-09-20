@@ -56,7 +56,7 @@ userDataObject = resources_pb2.UserAppIDSet(user_id=USER_ID, app_id=APP_ID)
 
 ##### Functions #####
 ##### ##### Translation ##### #####
-def translate(text):
+def translate(text, code):
     translator = Translator()
     translate = translator.translate((text), src='en', dest=code)
     return translate.text
@@ -72,9 +72,9 @@ def show_result(image, alt):
         st.caption('english alt')
         st.code(alt.capitalize(), language='text')
 
-        if not code == 'empty':
-            st.caption(f'{alt_lang.lower()} alt')
-            st.code(translate(alt).capitalize(), language='text')
+        for alt_lang in codes:
+            st.caption(f'{alt_lang[0].lower()} alt')
+            st.code(translate(alt, alt_lang[1]).capitalize(), language='text')
 
 ##### ##### Predict via Bytes ##### #####
 @st.cache_resource(ttl=900, show_spinner=False)
@@ -160,14 +160,17 @@ uploaded_files = st.file_uploader(
 
 url = st.text_input('paste an image URL')
 
-alt_lang = st.selectbox(
+alt_lang = st.multiselect(
     'alt text language other than english',
     (lang[0] for lang in langs)
 )
 
-for lang in langs:
-    if alt_lang == lang[0]:
-        code = lang[1]
+codes = []
+
+for lang_name in alt_lang:
+    for lang in langs:
+        if lang_name in lang:
+            codes.append(lang)
 
 _, col2, _ = st.columns([2, 8, 2])
 

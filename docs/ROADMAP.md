@@ -1,8 +1,9 @@
 # Roadmap
 
 - [ ] download all generated alt texts in `txt` format
-- [ ] multiple dest langs (multiselect)
+- [x] multiple dest langs (multiselect)
 - [ ] multiple urls (comma-separated)
+- [ ] add OCR
 - [ ] load model cache
 - [ ] exif transpose
 - [x] add model cache
