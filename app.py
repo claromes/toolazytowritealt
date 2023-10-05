@@ -140,6 +140,7 @@ file_uploader_font_size = '''
 st.markdown(file_uploader_font_size, unsafe_allow_html=True)
 
 ##### Options Interface #####
+st.warning('Clarifai PAT (Personal Access Token) is not configured for this deployment. To test the application, [run it locally](https://github.com/claromes/toolazytowritealt#development).', icon='⚠️')
 st.title('too lazy to write alt', anchor=False)
 st.caption('generate and translate alt text using VLP and LLM')
 
