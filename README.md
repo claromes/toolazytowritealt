@@ -1,12 +1,11 @@
 # 🦥 too lazy to write alt
-
-[![general-english-image-caption-blip-2-6_7B](https://clarifai.com/api/salesforce/blip/models/general-english-image-caption-blip-2-6_7B/badge)](https://clarifai.com/salesforce/blip/models/general-english-image-caption-blip-2-6_7B)
+[![Streamlit LLM Hackathon](https://img.shields.io/badge/Streamlit%20LLM%20Hackathon-fc7a7a?logo=streamlit&labelColor=eb4949&&logoColor=white)](https://discuss.streamlit.io/t/llm-hackathon-winners/52756) [![general-english-image-caption-blip-2-6_7B](https://clarifai.com/api/salesforce/blip/models/general-english-image-caption-blip-2-6_7B/badge)](https://clarifai.com/salesforce/blip/models/general-english-image-caption-blip-2-6_7B)
 
 Generate and translate alt text using VLP and LLM.
 
 *too lazy...* is mobile-friendly, allows multiple images to be uploaded via URL or directly, offers translation into multiple languages, and includes a "copy to clipboard" button for each generated alt text.
 
-## Language Model
+## Model
 
 BLIP-2 OPT 6.7B model is fine-tuned for the image captioning task using the ViT-g image encoder and the [OPT language model](https://arxiv.org/pdf/2205.01068.pdf) with 6.7 billion parameters. The model uses the prompt "a photo of" as an initial input to the language model and is trained to generate the caption with the language modeling loss.
 
@@ -23,7 +22,7 @@ The model is fine-tuned for the image captioning task using the prompt "a photo 
 
 ## Known Issue
 
-The model takes some time to load, resulting in a negative user experience. A [message](https://github.com/claromes/toolazytowritealt/blob/a8163ce8d0f508a035b55de88a95d94d49b56408/app.py#L128) has been added to notify users about the model loading and to request a new generation of alt text. This measure aims to temporarily address the issue.
+The model takes some time to load, resulting in a negative user experience. A message has been added to notify users about the model loading and to request a new generation of alt text. This measure aims to temporarily address the issue.
 
 ## Specs
 
